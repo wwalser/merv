@@ -1,42 +1,47 @@
+import { assert } from "console";
+
+interface mervVariables {[variableName: string]: any}
+interface mervFunctions {[functionName: string]: Function}
+
 const booleanOperations = [
     '&&',
     '||',
     '==',
 ];
 
-const isSpace = (ch) => {
+const isSpace = (ch: string) => {
     return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n';
 };
 
-const isLetter = (ch) => {
+const isLetter = (ch: string) => {
     return (ch >= 'a' && ch <= 'z') 
         || (ch >= 'A' && ch <= 'Z')
         || ch == '_';
 };
 
-const isParen = (ch) => {
+const isParen = (ch: string) => {
     return ch === '(' || ch === ')';
 };
 
-const isQuote = (ch) => {
+const isQuote = (ch: string) => {
     return ch === '"';
 };
 
-const isEscape = (ch) => {
+const isEscape = (ch: string) => {
     return ch === "\\";
 };
 
-const isEqual = (ch) => {
+const isEqual = (ch: string) => {
     return ch === "=";
 };
 
-const isNumber = (token) => {
-    return !isNaN(token) && !isNaN(parseFloat(token));
+const isNumber = (token: string) => {
+    return !isNaN(parseFloat(token));
 }
 
-const tokenize = (thing) => {
+const tokenize = (thing: string): string[] => {
     if (!(thing && thing.length>0)) {
-        return false;
+        return [];
     }
     
     const tokens = [];
@@ -76,7 +81,7 @@ const tokenize = (thing) => {
             } while (isNumber(ch))
         } else if (isQuote(ch)) {
             do {
-                if (isEscape(ch) && (isQuote(thing.charAt(i+1) || isEscape(i+1)))) {
+                if (isEscape(ch) && (isQuote(thing.charAt(i+1)) || isEscape(thing.charAt(i+1)))) {
                     i++;
                     ch = thing.charAt(i);
                 }
@@ -101,19 +106,19 @@ const tokenize = (thing) => {
     return tokens;
 };
 
-const isBoolean = (token) => {
+const isBoolean = (token: string) => {
     return token === 'true' || token === 'false';
 };
 
-const isBooleanOperation = (token) => {
+const isBooleanOperation = (token: string) => {
     return booleanOperations.indexOf(token) !== -1;
 };
 
-const isString = (token) => {
+const isString = (token: string) => {
     return isQuote(token.charAt(0));
 }
 
-const findClosingParen = (tokens, startIndex) => {
+const findClosingParen = (tokens: string[], startIndex: number): number => {
     let openCount = 0;
     for (let tokenCounter = startIndex; tokenCounter < tokens.length;) {
         const currentToken = tokens[tokenCounter];
@@ -126,21 +131,22 @@ const findClosingParen = (tokens, startIndex) => {
         }
         tokenCounter++;
     }
+    throw new Error('Expected ")" before end of program.');
 }
 
-const execBoolean = (token) => () => {
+const execBoolean = (token: string) => () => {
     return token === 'true';
 };
 
-const execVariable = (token, variables) => () => {
+const execVariable = (token: string, variables: mervVariables) => () => {
     return variables[token];
 };
 
-const execFunction = (functionName, operands, functions) => () => {
+const execFunction = (functionName: string, operands: Function[], functions: mervFunctions) => () => {
     return functions[functionName](...operands.map(op => op()));
 }
 
-const execBooleanOperation = (token, leftOperand, rightOperand) => () => {
+const execBooleanOperation = (token: string, leftOperand: Function, rightOperand: Function) => () => {
     if (token === '&&') {
         return leftOperand() && rightOperand();
     } else if (token === '||') {
@@ -150,7 +156,7 @@ const execBooleanOperation = (token, leftOperand, rightOperand) => () => {
     }
 };
 
-const execString = (token) => () => {
+const execString = (token: string) => () => {
     let stringResult = "";
     for (let i = 1; i < token.length-1; i++) {
         let ch = token.charAt(i);
@@ -163,14 +169,15 @@ const execString = (token) => () => {
     return stringResult;
 }
 
-const execNumber = (token) => () => {
+const execNumber = (token: string) => () => {
     return parseFloat(token);
 }
 
-const value = (tokens, variables, functions, counterStart = 0) => {
+const value = (tokens: string[], variables: mervVariables, functions: mervFunctions, counterStart = 0): () => any => {
+    const undefinedLeft:() => any = () => {};
     for (let tokenCounter = counterStart; tokenCounter < tokens.length;) {
         let currentToken = tokens[tokenCounter];
-        let leftOperand = undefined;
+        let leftOperand = undefinedLeft;
         if (isBoolean(currentToken)) {
             leftOperand = execBoolean(currentToken);
             tokenCounter++;
@@ -196,7 +203,7 @@ const value = (tokens, variables, functions, counterStart = 0) => {
             }
             tokenCounter++;
             currentToken = tokens[tokenCounter];
-            const operands = [];
+            const operands: Function[] = [];
             while (currentToken !== ')' && tokenCounter < tokens.length) {
                 let endOfOperand = tokens.indexOf(',', tokenCounter);
                 if (endOfOperand !== -1) {
@@ -218,18 +225,18 @@ const value = (tokens, variables, functions, counterStart = 0) => {
             tokenCounter++;
             currentToken = tokens[tokenCounter];
         }
+        if (leftOperand === undefinedLeft) {
+            throw new Error(`Expected value or function but got "${currentToken}" at location ${tokenCounter}.`);
+        }
         if (isBooleanOperation(currentToken)) {
             return execBooleanOperation(currentToken, leftOperand, value(tokens, variables, functions, tokenCounter+1));
-        } else {
-            if (leftOperand) {
-                return leftOperand;
-            }
-            throw new Error(`error parsing token "${currentToken}" at location ${tokenCounter}.`);
         }
+        return leftOperand;
     }
+    throw new Error(`Unparsable expression.`);
 }
 
-const parse = (thing, variables = {}, functions = {}) => {
+const parse = (thing: string, variables = {}, functions = {}) => {
     const tokens = tokenize(thing);
     return value(
         tokens,

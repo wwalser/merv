@@ -1,7 +1,7 @@
-import assert from 'assert';
+import {strict as assert} from 'assert';
 import merv from './merv';
 
-const programs = {
+const programs: {[program: string]: any} = {
     // boolean tests
     'true': true,
     'false': false,
@@ -50,9 +50,9 @@ const variables = {
 };
 const functions = {
   functionRetTrue: () => true,
-  functionRetOp: op => op,
-  twoOpOr: (a, b) => a || b,
-  arrayContains: (arr, needle) => arr.indexOf(needle) !== -1,
+  functionRetOp: <T>(op: T) => op,
+  twoOpOr: <T, X>(a: T, b: X) => a || b,
+  arrayContains: <T>(arr: Array<T>, needle: T) => arr.indexOf(needle) !== -1,
 };
 
 describe('merv', function() {
