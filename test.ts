@@ -25,6 +25,18 @@ const programs: {[program: string]: any} = {
     '"testing" == "foobar"': false,
     '"baz" == "baz"': true,
     '1234 == 1234': true,
+    // LT
+    '10 < 11': true,
+    '10 < 9': false,
+    '10 <= 9': false,
+    '10 <= 10': true,
+    '10 <= 11': true,
+    // GT
+    '10 > 11': false,
+    '10 > 9': true,
+    '10 >= 9': true,
+    '10 >= 10': true,
+    '10 >= 11': false,
     // variable tests
     'varThatIsTrue': true,
     'varThatIsFalse': false,

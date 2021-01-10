@@ -11,6 +11,10 @@ const booleanOperations = [
     '&&',
     '||',
     '==',
+    '>',
+    '>=',
+    '<',
+    '<=',
 ];
 
 const isSpace = (ch: string) => {
@@ -157,6 +161,14 @@ const execBooleanOperation = (token: string, leftOperand: Function, rightOperand
         return leftOperand() || rightOperand();
     } else if (token === '==') {
         return leftOperand() == rightOperand();
+    } else if (token === '>') {
+        return leftOperand() > rightOperand();
+    } else if (token === '>=') {
+        return leftOperand() >= rightOperand();
+    } else if (token === '<') {
+        return leftOperand() < rightOperand();
+    } else if (token === '<=') {
+        return leftOperand() <= rightOperand();
     }
 };
 

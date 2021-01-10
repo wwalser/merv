@@ -45,6 +45,10 @@ merv supports the following logical operators:
 // '||' —— Logical or
 // '&&' —— Logical and
 // '==' —— Logical equality
+// '<' —— Less than
+// '<=' —— Less than equal to
+// '>' —— Greater than
+// '<=' —— Greater than equal to
 ```
 
 The following values:
@@ -57,5 +61,5 @@ The following values:
 ```
 
 ## The license of merv
-merv is not a "project". It is a very simple piece of code that serves a targeted use case. If you need to use merv, you likely don't have the exact use-case that merv was design for. For this reason, the unlicense license is used to avoid entanglements. Just copy and paste the code into your code base and customise it to do what you need. No credit or attribution is necessary. The license need not remain.
+merv is not a "project". It is a very simple piece of code that serves a targeted use case. If you need to use merv, you likely don't have the exact use-case that merv was designed for. For this reason, the unlicense license is used to avoid entanglements. Just copy and paste the code into your code base and customise it to do what you need. No credit or attribution is necessary. The license need not remain.
 Public domain and all that jazz. 
