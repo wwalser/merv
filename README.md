@@ -50,7 +50,7 @@ merv supports the following logical operators:
 The following values:
 ```
 // 'true' 'false' — Booleans
-// '"string"' —— String literals. Double quotes only. Escape sequence, \, for double quotes '\"' or backslash '\\'
+// '"string"' —— String literals. Double quotes only. Escapes for double quotes \"
 // '1234' —— Numbers
 // 'fnName()' —— Functions
 // 'varName' —— Variables

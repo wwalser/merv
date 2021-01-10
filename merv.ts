@@ -160,10 +160,6 @@ const execString = (token: string) => () => {
     let stringResult = "";
     for (let i = 1; i < token.length-1; i++) {
         let ch = token.charAt(i);
-        if (isEscape(ch)) {
-            i++;
-            ch = token.charAt(i);
-        }
         stringResult += ch;
     }
     return stringResult;

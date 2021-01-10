@@ -7,6 +7,8 @@ const programs: {[program: string]: any} = {
     'false': false,
     // string tests
     '"testing"': "testing",
+    '"Escapes \\"work\\" inside strings"': 'Escapes "work" inside strings',
+    '"Escaping \\\\ slashes."': 'Escaping \\ slashes.',
     // number tests
     '1234': 1234,
     // && tests
@@ -41,6 +43,8 @@ const programs: {[program: string]: any} = {
     'true && twoOpOr(false, functionRetOp(false) || true)': true,
     // Use cases
     'arrayContains(myArray, "world")': true,
+    'fnOr(false, false)': false,
+    'fnOr(true && true, false || true)': true,
 };
 
 const variables = {
@@ -53,6 +57,7 @@ const functions = {
   functionRetOp: <T>(op: T) => op,
   twoOpOr: <T, X>(a: T, b: X) => a || b,
   arrayContains: <T>(arr: Array<T>, needle: T) => arr.indexOf(needle) !== -1,
+  fnOr: (...args: boolean[]) => args.reduce((acc, arg) => acc || arg, false)
 };
 
 describe('merv', function() {

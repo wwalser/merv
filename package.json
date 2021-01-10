@@ -1,6 +1,6 @@
 {
-  "name": "merv",
-  "version": "1.0.0",
+  "name": "mervjs",
+  "version": "1.0.1",
   "description": "Simple logical expression evaluator.",
   "scripts": {
     "build": "tsc",
