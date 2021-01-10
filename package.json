@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "description": "Simple logical expression evaluator.",
   "scripts": {
-    "test": "ts-mocha --require esm test.ts"
+    "build": "tsc",
+    "test": "ts-mocha --require esm test.ts",
+    "prepublish": "npm test"
   },
-  "main": "merv.js",
-  "repository": "git@github.com:wwalser/merv.git",
+  "main": "dist/merv.js",
+  "types": "dist/index.d.ts",
   "author": "Wesley Walser <waw325@gmail.com>",
   "license": "Unlicense",
   "dependencies": {
