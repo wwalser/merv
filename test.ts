@@ -64,7 +64,7 @@ describe('merv', function() {
   Object.keys(programs).forEach((program) => {
     describe(`Run program: ${program}`, function() {
       it('Should elicit the correct result', function() {
-        const result = merv(program, variables, functions)();
+        const result = merv({variables, functions}).parse(program)();
         assert.equal(result, programs[program]);
       });
     });

@@ -2,6 +2,10 @@ import { assert } from "console";
 
 interface mervVariables {[variableName: string]: any}
 interface mervFunctions {[functionName: string]: Function}
+interface mervOpts {
+    variables?: mervVariables,
+    functions?: mervFunctions,
+}
 
 const booleanOperations = [
     '&&',
@@ -241,4 +245,12 @@ const parse = (thing: string, variables = {}, functions = {}) => {
     );
 }
 
-export default parse;
+const merv = (opts: mervOpts) => {
+    const variables = opts.variables ?? {};
+    const functions = opts.functions ?? {};
+    return {
+        parse: (thing: string) => parse(thing, variables, functions),
+    }
+};
+
+export default merv;
