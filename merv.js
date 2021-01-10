@@ -1,45 +1,3 @@
-const programs = {
-    // boolean tests
-    'true': true,
-    'false': false,
-    // string tests
-    '"testing"': "testing",
-    // number tests
-    '1234': 1234,
-    // && tests
-    'true && true': true,
-    'true && false': false,
-    'false && true': false,
-    // || tests
-    'true || true': true,
-    'true || false': true,
-    'false || false': false,
-    // equality
-    'true == false': false,
-    'false == false': true,
-    '"testing" == "foobar"': false,
-    '"baz" == "baz"': true,
-    '1234 == 1234': true,
-    // variable tests
-    'varThatIsTrue': true,
-    'varThatIsFalse': false,
-    'varThatIsTrue || false': true,
-    'varThatIsFalse && true': false,
-    // function tests
-    'functionRetTrue()': true,
-    'false || functionRetTrue()': true,
-    'functionRetOp(true)': true,
-    'functionRetOp(true && false)': false,
-    'twoOpOr(false, true)': true,
-    'twoOpOr(false, functionRetTrue())': true,
-    'functionRetOp(1234) == functionRetOp(1234)': true,
-    // Complexity
-    'functionRetOp(false) || true' : true,
-    'true && twoOpOr(false, functionRetOp(false) || true)': true,
-    // Use cases
-    'arrayContains(myArray, "world")': true,
-};
-
 const booleanOperations = [
     '&&',
     '||',
@@ -157,7 +115,7 @@ const isString = (token) => {
 
 const findClosingParen = (tokens, startIndex) => {
     let openCount = 0;
-    for (tokenCounter = startIndex; tokenCounter < tokens.length;) {
+    for (let tokenCounter = startIndex; tokenCounter < tokens.length;) {
         const currentToken = tokens[tokenCounter];
         if (currentToken === ')' && openCount === 0) {
             return tokenCounter;
@@ -280,24 +238,4 @@ const parse = (thing, variables = {}, functions = {}) => {
     );
 }
 
-
-// Test runner.
-const variables = {
-    varThatIsTrue: true,
-    varThatIsFalse: false,
-    myArray: ["hello", "world"],
-};
-const functions = {
-    functionRetTrue: () => true,
-    functionRetOp: op => op,
-    twoOpOr: (a, b) => a || b,
-    arrayContains: (arr, needle) => arr.indexOf(needle) !== -1,
-};
-Object.keys(programs).forEach((program) => {
-    const result = parse(program, variables, functions)();
-    const passed = result === programs[program];
-    console.log(passed ? '✔' : '✖')
-    if (!passed) {
-        console.log(`program: '${program}' evaluates to: ${result} but should evaluate to ${programs[program]}`,);
-    }
-});
+export default parse;
