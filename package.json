@@ -1,0 +1,9 @@
+{
+  "name": "merv",
+  "version": "1.0.0",
+  "description": "Simple logical expression evaluator. Aims to be a very simple but useful DSL for cases where full JS access is insecure.",
+  "main": "merv.js",
+  "repository": "git@github.com:wwalser/merv.git",
+  "author": "Wesley Walser <waw325@gmail.com>",
+  "license": "UNLICENSE"
+}
