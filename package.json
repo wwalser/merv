@@ -7,6 +7,8 @@
     "test": "ts-mocha --require esm test.ts",
     "prepublish": "npm test"
   },
+  "homepage": "http://https://github.com/wwalser/merv",
+  "repository": "github:wwalser/merv",
   "main": "dist/merv.js",
   "types": "dist/index.d.ts",
   "author": "Wesley Walser <waw325@gmail.com>",
