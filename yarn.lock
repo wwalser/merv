@@ -77,9 +77,9 @@ balanced-match@^1.0.0:
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
 binary-extensions@^2.0.0:
-  version "2.1.0"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/binary-extensions/-/binary-extensions-2.1.0.tgz#30fa40c9e7fe07dbc895678cd287024dea241dd9"
-  integrity sha1-MPpAyef+B9vIlWeM0ocCTeokHdk=
+  version "2.2.0"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
+  integrity sha1-dfUC7q+f/eQvyYgpZFvk6na9ni0=
 
 brace-expansion@^1.1.7:
   version "1.1.11"
